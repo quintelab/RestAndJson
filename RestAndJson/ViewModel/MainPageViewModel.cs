@@ -63,6 +63,10 @@ namespace RestAndJson
 			}
 		}
 
+		public async Task GetWeatherAsync(string url)
+		{
+		}
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
