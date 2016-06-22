@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace RestAndJson
 {
@@ -21,8 +23,8 @@ namespace RestAndJson
 			}
 		}
 
-		private string elevation;
-		public string Elevation
+		private long elevation;
+		public long Elevation
 		{
 			get
 			{
@@ -35,8 +37,8 @@ namespace RestAndJson
 			}
 		}
 
-		private string temperature;
-		public string Temperature
+		private long temperature;
+		public long Temperature
 		{
 			get
 			{
@@ -49,8 +51,8 @@ namespace RestAndJson
 			}
 		}
 
-		private string humidity;
-		public string Humidity
+		private long humidity;
+		public long Humidity
 		{
 			get
 			{
@@ -65,6 +67,27 @@ namespace RestAndJson
 
 		public async Task GetWeatherAsync(string url)
 		{
+			HttpClient client = new HttpClient();
+			client.BaseAddress = new Uri(url);
+
+			var response = await client.GetAsync(client.BaseAddress);
+			response.EnsureSuccessStatusCode();
+
+			var JsonResult = response.Content.ReadAsStringAsync().Result;
+			var weather = JsonConvert.DeserializeObject<WeatherResult>(JsonResult);
+
+			SetValues(weather);
+		}
+
+		private void SetValues(WeatherResult weather)
+		{
+			if (weather.weatherObservation != null)
+			{
+				StationName = weather.weatherObservation.stationName;
+				Elevation = weather.weatherObservation.elevation;
+				Temperature = weather.weatherObservation.temperature;
+				Humidity = weather.weatherObservation.humidity;
+			}
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
