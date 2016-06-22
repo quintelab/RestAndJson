@@ -45,6 +45,7 @@
     </Compile>
     <Compile Include="Model\WeatherResult.cs" />
     <Compile Include="Model\WeatherObservation.cs" />
+    <Compile Include="ViewModel\MainPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
