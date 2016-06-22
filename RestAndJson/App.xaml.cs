@@ -8,7 +8,7 @@ namespace RestAndJson
 		{
 			InitializeComponent();
 
-			MainPage = new RestAndJsonPage();
+			MainPage = new MainPage();
 		}
 
 		protected override void OnStart()
